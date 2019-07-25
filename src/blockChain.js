@@ -1,4 +1,7 @@
 let hash = require('object-hash');
+let validator = require('./validator');
+
+const TARGET_HASH = 456;
 
 class blockChain {
 
@@ -14,6 +17,12 @@ class blockChain {
       transactions: this.current_transaction,
       prevHash: prevHash,
     };
+    if(validator.proofOfWork == TARGET_HASH) {
+      //save it to DB
+    }
+
+
+
     this.hash = hash(block);
     this.chain.push(block);
     this.current_transaction = [];

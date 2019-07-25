@@ -9,7 +9,7 @@ let blockChainSchema  = new Schema({
   timestamp:{
     type: Schema.Types.Date,
     require: true,
-    default: Date.now();
+    default: Date.now()
   },
   transactions:{
     type: Schema.Types.Array,
