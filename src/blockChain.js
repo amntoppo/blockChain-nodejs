@@ -1,5 +1,6 @@
 let hash = require('object-hash');
 let validator = require('./validator');
+let chalk = require('chalk');
 
 const TARGET_HASH = 456;
 
@@ -19,6 +20,16 @@ class blockChain {
     };
     if(validator.proofOfWork == TARGET_HASH) {
       //save it to DB
+      let newBlock = blockChainModel(this.block);
+      newBlock.save((err) => {
+        if (err) {
+          console.log(err);
+          console.log("does not work");
+          return;
+        } else {
+            console.log("works");
+        }
+      });
     }
 
 
@@ -30,11 +41,12 @@ class blockChain {
 
   }
   addNewTransaction(sender, receiver, amount) {
-    this.current_transaction.push({sender, receiver,amount});
+    this.current_transaction.push({sender, receiver,amount});////''''
   }
 
   lastBlock() {
     return this.chain.slice(-1)[0];
+    olk
   }
 
   isEmpty() {
