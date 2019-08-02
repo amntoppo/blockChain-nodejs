@@ -1,9 +1,11 @@
-let BlockChain = require('./blockChain');
 let Database = require('./database');
+let BlockChain = require('./blockChain');
+
+let hash = require('object-hash');
 
 Database.onConnect(() => {
 
-let hash = require('object-hash');
+
 let blockChain = new BlockChain();
 
 // let PROOF = 456;

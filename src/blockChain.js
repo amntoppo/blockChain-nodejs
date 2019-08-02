@@ -1,8 +1,10 @@
 let hash = require('object-hash');
 let validator = require('./validator');
-let chalk = require('chalk');
+//let chalk = require('chalk');
+let mongoose = require('mongoose');
+let blockChainModel = mongoose.model("BlockChain");
 
-const TARGET_HASH = 456;
+const TARGET_HASH = hash(456);
 
 class blockChain {
 
@@ -18,8 +20,13 @@ class blockChain {
       transactions: this.current_transaction,
       prevHash: prevHash,
     };
-    if(validator.proofOfWork == TARGET_HASH) {
+    console.log("before validator");
+    if(validator.proofOfWork() == TARGET_HASH) {
+      console.log("validator");
       //save it to DB
+      //let dbsave = 
+
+      block.hash = hash(block);
       let newBlock = blockChainModel(this.block);
       newBlock.save((err) => {
         if (err) {
@@ -30,18 +37,20 @@ class blockChain {
             console.log("works");
         }
       });
+      this.chain.push(block);
     }
+    console.log("After validator");
 
 
 
-    this.hash = hash(block);
-    this.chain.push(block);
+    // this.chain.push(block);
     this.current_transaction = [];
     return block;
 
   }
   addNewTransaction(sender, receiver, amount) {
-    this.current_transaction.push({sender, receiver,amount});////''''
+    this.current_transaction.push({sender, receiver,amount});
+    console.log("transaction addeD");
   }
 
   lastBlock() {

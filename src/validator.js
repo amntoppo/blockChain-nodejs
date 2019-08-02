@@ -1,9 +1,10 @@
 let hash = require('object-hash');
+const TARGET_HASH = 456;
 
-module.exports.validProof = () => {
+module.exports.validProof = (proof) => {
   let guessHash = hash(proof);
   console.log("Hashing: ", guessHash);
-  return guessHash == hash(PROOF);
+  return guessHash == hash(TARGET_HASH);
 }
 
 module.exports.proofOfWork = () => {
