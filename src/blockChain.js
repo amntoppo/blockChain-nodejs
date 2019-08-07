@@ -13,6 +13,14 @@ class blockChain {
     this.current_transaction = [];
   }
 
+  getLastBlock(callback) {
+    //get last block from DB
+    return blockChainModel.findOne({}, null, {sort : {_id: -1}, limit: 1 }, (err, block) => {
+      if(err) return console.log("Error getting last block");
+      return callback(block);
+    });
+  }
+
   addnewBlock(prevHash) {
     let block = {
       index: this.chain.length + 1,
@@ -27,25 +35,42 @@ class blockChain {
       //let dbsave = 
 
       block.hash = hash(block);
-      let newBlock = blockChainModel(this.block);
+      //get Last BLock
+      this.getLastBlock((lastBlock) => {
+        if(lastBlock) {
+          block.prevHash = lastBlock.hash;
+          console.log("last block available");
+
+        }
+        let newBlock = blockChainModel(this.block);
       newBlock.save((err) => {
         if (err) {
           console.log(err);
-          console.log("does not work");
+          //console.log("does not work");
           return;
         } else {
-            console.log("works");
+            console.log("saved to DB");
         }
       });
       this.chain.push(block);
+      this.current_transaction = [];
+      return block;
+      });
+
+     
+        
+
+     // });
+
+
+      
     }
     console.log("After validator");
 
 
 
     // this.chain.push(block);
-    this.current_transaction = [];
-    return block;
+    
 
   }
   addNewTransaction(sender, receiver, amount) {
@@ -55,7 +80,7 @@ class blockChain {
 
   lastBlock() {
     return this.chain.slice(-1)[0];
-    olk
+    
   }
 
   isEmpty() {
