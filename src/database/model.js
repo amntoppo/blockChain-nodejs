@@ -17,7 +17,7 @@ let blockChainSchema  = new Schema({
   },
   prevHash:{
     type: Schema.Types.String,
-    require: false
+    require: true
   },
   hash: {
     type: Schema.Types.String,

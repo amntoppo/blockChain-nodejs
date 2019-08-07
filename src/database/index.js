@@ -2,7 +2,8 @@ let mongoose = require('mongoose');
 let blockChainModel = require('./model');
 
 //connect to DB
-mongoose.connect('mongodb://127.0.0.1:27017/blockChain', (err) => {
+//mongoose.connect('mongodb://127.0.0.1:27017/blockChain', { useNewUrlParser: true});
+mongoose.connect('mongodb://127.0.0.1:27017/blockChain', { useNewUrlParser: true}, (err) => {
   if(err) {
     return console.log("Cannot connect to db");
   }

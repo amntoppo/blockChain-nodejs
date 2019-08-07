@@ -39,10 +39,12 @@ class blockChain {
       this.getLastBlock((lastBlock) => {
         if(lastBlock) {
           block.prevHash = lastBlock.hash;
+          console.log(lastBlock.hash);
           console.log("last block available");
 
         }
-        let newBlock = blockChainModel(this.block);
+        let newBlock = blockChainModel(block);
+        console.log(newBlock);
       newBlock.save((err) => {
         if (err) {
           console.log(err);
@@ -50,6 +52,7 @@ class blockChain {
           return;
         } else {
             console.log("saved to DB");
+            //console.log(this.block);
         }
       });
       this.chain.push(block);
